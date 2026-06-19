@@ -8,21 +8,24 @@ Use this file in every PR. Add your section under the correct heading.
 
 ## Feature Tested
 
-- Project Search by Name
-- Project Status Filtering
-- Create Project Form Validation
+Implement send message
+Prevent empty messages
+Implement invite user
+Validate invite email
+Prevent duplicate pending invites
+Add tests for message and invite behavior
 
 ## Test Cases
 
-| Case                                 | Expected Result                                        | Actual Result                                  | Status |
-| ------------------------------------ | ------------------------------------------------------ | ---------------------------------------------- | ------ |
-| Search project using "Website"       | Only projects containing "Website" are displayed       | Matching projects were displayed correctly     | Pass   |
-| Filter projects by "Planning" status | Only projects with Planning status are displayed       | Only Planning projects were shown              | Pass   |
-| Search and status filter together    | Only projects matching both conditions are displayed   | Correct filtered results were shown            | Pass   |
-| Submit project with empty name       | Validation message should appear                       | "Project name is required." displayed          | Pass   |
-| Submit project with empty owner      | Validation message should appear                       | "Project owner is required." displayed         | Pass   |
-| Submit project with valid details    | New project should be created and displayed            | Project created successfully and added to list | Pass   |
-| Click Ship button on a project       | Project status changes to Shipped and risk becomes Low | Status and risk updated correctly              | Pass   |
+Case Expected Result Actual Result Status
+Add a project without entering a project name Application should prevent project creation and display "Project name is required." Project was not created and validation message was shown Pass
+Add a project without entering an owner name Application should prevent project creation and display "Project owner is required." Project was not created and validation message was shown Pass
+Add a project with valid name, owner, and status New project should be added to the delivery board successfully Project was added and success message was displayed Pass
+Send an empty message Application should prevent sending empty messages and display an error message Empty message was not added and validation message was shown Pass
+Send a valid message Message should appear in the team room with author and timestamp Message was added successfully to the message list Pass
+Enter an invalid email while sending an invite Application should prevent the invite and show an invalid email error Invite was not created and error message was displayed Pass
+Send an invite with a valid email New invite should be added to the invite list with pending status Invite was created successfully Pass
+Send an invite to an email that already has a pending invite Application should prevent duplicate pending invites and display an error Duplicate invite was not created and warning message was shown Pass
 
 ## Commands Run
 
@@ -34,6 +37,7 @@ npm.cmd run build
 ## AI Usage Notes
 
 - What I asked AI:
+  <<<<<<< HEAD
   I asked AI for help with:
 
 -Implementing project search by name.
@@ -74,6 +78,20 @@ npm.cmd run build
   I added functionality that allows users to search for projects by name and filter them by their current status. I also completed the create-project form so users can add new projects to the board.
   Before a project is added, the code checks whether both the project name and owner fields have been filled in. If either field is empty, an error message is shown. If the information is valid, the new project is added to the list and a success message is displayed.
   I also added tests to make sure the filtering and project creation features work as expected and continue to work after future changes.
+  =======
+  Asked AI for guidance on implementing input validation for project creation, message sending, email validation, and duplicate invite checking.
+
+- What code I accepted:
+  Accepted the validation logic for checking empty fields, email format validation using regex, and duplicate pending invite checking.
+
+- What I changed manually:
+  Integrated the validation logic into the existing event handlers and customized notice messages according to the application flow.
+
+- What tests prove it works:
+  Manual testing of valid and invalid inputs for project creation, messages, and invitations confirmed that validations worked correctly.
+
+- Explanation in my own words:
+  I added validation checks before updating the application state. The application now prevents empty projects, empty messages, invalid email addresses, and duplicate pending invites while displaying appropriate feedback messages to the user.
 
 ## Screenshots
 
