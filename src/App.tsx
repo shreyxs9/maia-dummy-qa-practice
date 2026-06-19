@@ -28,10 +28,45 @@ export function App() {
     
 
   function handleCreateProject(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    // Intern task: read form values, validate name/owner, add project, and write tests.
-    setNotice("TODO: create project with validation.");
+  event.preventDefault();
+
+  const form = event.currentTarget;
+
+  const name = (
+    form.elements.namedItem("name") as HTMLInputElement
+  ).value.trim();
+
+  const owner = (
+    form.elements.namedItem("owner") as HTMLInputElement
+  ).value.trim();
+
+  const status = (
+    form.elements.namedItem("status") as HTMLSelectElement
+  ).value as ProjectStatus;
+
+  if (!name) {
+    setNotice("Project name is required.");
+    return;
   }
+
+  if (!owner) {
+    setNotice("Project owner is required.");
+    return;
+  }
+
+  const newProject: Project = {
+    id: Date.now(),
+    name,
+    owner,
+    status,
+    risk: "Low",
+  };
+
+  setProjects((current) => [...current, newProject]);
+
+  setNotice(`Project "${name}" created successfully.`);
+  form.reset();
+}
 
   function handleSendMessage(event: React.FormEvent<HTMLFormElement>) {
   event.preventDefault();
