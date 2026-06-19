@@ -17,15 +17,15 @@ export function App() {
 
   const projectStats = useMemo(() => calculateProjectStats(projects), [projects]);
 
-  const visibleProjects = projects.filter((project) => {
+  
+    const visibleProjects = projects.filter((project) => {
     const normalizedSearch = projectSearch.trim().toLowerCase();
     const matchesSearch =
       normalizedSearch.length === 0 || project.name.toLowerCase().includes(normalizedSearch);
-    const matchesStatus = statusFilter === "All" || project.status === statusFilter;
-
-    return matchesSearch && matchesStatus;
+    // statusFilter is handled in a separate PR (feature/project-status-filter).
+    return matchesSearch;
   });
-  
+    
 
   function handleCreateProject(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
