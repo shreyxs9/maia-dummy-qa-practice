@@ -17,10 +17,15 @@ export function App() {
 
   const projectStats = useMemo(() => calculateProjectStats(projects), [projects]);
 
-  const visibleProjects = projects.filter((project) => {
-    // Intern task: include statusFilter and projectSearch in this calculation.
-    return project.name.length > 0;
+  
+    const visibleProjects = projects.filter((project) => {
+    const normalizedSearch = projectSearch.trim().toLowerCase();
+    const matchesSearch =
+      normalizedSearch.length === 0 || project.name.toLowerCase().includes(normalizedSearch);
+    // statusFilter is handled in a separate PR (feature/project-status-filter).
+    return matchesSearch;
   });
+    
 
   function handleCreateProject(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
