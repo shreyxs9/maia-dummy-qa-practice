@@ -22,8 +22,9 @@ export function App() {
     const normalizedSearch = projectSearch.trim().toLowerCase();
     const matchesSearch =
       normalizedSearch.length === 0 || project.name.toLowerCase().includes(normalizedSearch);
-    // statusFilter is handled in a separate PR (feature/project-status-filter).
-    return matchesSearch;
+    const matchesStatus = statusFilter === "All" || project.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
   });
     
 
