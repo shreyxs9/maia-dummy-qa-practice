@@ -18,9 +18,14 @@ export function App() {
   const projectStats = useMemo(() => calculateProjectStats(projects), [projects]);
 
   const visibleProjects = projects.filter((project) => {
-    // Intern task: include statusFilter and projectSearch in this calculation.
-    return project.name.length > 0;
+    const normalizedSearch = projectSearch.trim().toLowerCase();
+    const matchesSearch =
+      normalizedSearch.length === 0 || project.name.toLowerCase().includes(normalizedSearch);
+    const matchesStatus = statusFilter === "All" || project.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
   });
+  
 
   function handleCreateProject(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
