@@ -51,11 +51,22 @@ export function App() {
   form.reset();
 }
 
-  function handleInvite(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    // Intern task: validate email, prevent duplicate pending invites, and test failures.
-    setNotice("TODO: invite user with email validation.");
-  }
+function handleInvite(event: React.FormEvent<HTMLFormElement>) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+  const role = (form.elements.namedItem("role") as HTMLSelectElement).value;
+
+  const newInvite: Invite = {
+    id: Date.now(),
+    email,
+    role,
+    status: "Pending",
+  };
+
+  setInvites((current) => [...current, newInvite]);
+  form.reset();
+}
 
   function markProjectShipped(projectId: number) {
     setProjects((current) =>
