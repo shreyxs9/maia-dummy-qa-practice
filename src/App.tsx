@@ -74,6 +74,14 @@ function handleInvite(event: React.FormEvent<HTMLFormElement>) {
   setInvites((current) => [...current, newInvite]);
   setNotice("");
   form.reset();
+    const isDuplicate = invites.some(
+    (invite) =>
+       invite.email === email && invite.status === "Pending"
+  );
+  if (isDuplicate) {
+    setNotice(`${email} already has a pending invite.`);
+    return;
+  }
 }
 
   function markProjectShipped(projectId: number) {
