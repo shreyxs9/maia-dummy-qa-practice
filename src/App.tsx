@@ -33,14 +33,21 @@ export function App() {
   const form = event.currentTarget;
   const body = (form.elements.namedItem("message") as HTMLInputElement).value;
 
+  // ✅ Add this guard
+  if (!body.trim()) {
+    setNotice("Message cannot be empty.");
+    return;
+  }
+
   const newMessage: RoomMessage = {
     id: Date.now(),
     author: "You",
-    body,
+    body: body.trim(),
     createdAt: new Date().toLocaleTimeString(),
   };
 
   setMessages((current) => [...current, newMessage]);
+  setNotice("");
   form.reset();
 }
 
