@@ -57,6 +57,13 @@ function handleInvite(event: React.FormEvent<HTMLFormElement>) {
   const email = (form.elements.namedItem("email") as HTMLInputElement).value;
   const role = (form.elements.namedItem("role") as HTMLSelectElement).value;
 
+  // ✅ Add this guard
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    setNotice("Please enter a valid email address.");
+    return;
+  }
+
   const newInvite: Invite = {
     id: Date.now(),
     email,
@@ -65,6 +72,7 @@ function handleInvite(event: React.FormEvent<HTMLFormElement>) {
   };
 
   setInvites((current) => [...current, newInvite]);
+  setNotice("");
   form.reset();
 }
 
