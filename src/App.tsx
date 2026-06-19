@@ -92,7 +92,7 @@ export function App() {
   form.reset();
 }
 
-function handleInvite(event: React.FormEvent<HTMLFormElement>) {
+  function handleInvite(event: React.FormEvent<HTMLFormElement>) {
   event.preventDefault();
   const form = event.currentTarget;
   const email = (form.elements.namedItem("email") as HTMLInputElement).value;
@@ -104,7 +104,16 @@ function handleInvite(event: React.FormEvent<HTMLFormElement>) {
     setNotice("Please enter a valid email address.");
     return;
   }
-
+// ✅ Add this after the email validation guard
+const isDuplicate = invites.some(
+  (invite) =>
+    invite.email === email &&
+    invite.status.toLowerCase() === "pending"
+);
+  if (isDuplicate) {
+    setNotice(`${email} already has a pending invite.`);
+    return;
+  }
   const newInvite: Invite = {
     id: Date.now(),
     email,
