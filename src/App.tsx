@@ -29,10 +29,20 @@ export function App() {
   }
 
   function handleSendMessage(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    // Intern task: prevent empty messages, add message, and test the behavior.
-    setNotice("TODO: send chat message with empty-message validation.");
-  }
+  event.preventDefault();
+  const form = event.currentTarget;
+  const body = (form.elements.namedItem("message") as HTMLInputElement).value;
+
+  const newMessage: RoomMessage = {
+    id: Date.now(),
+    author: "You",
+    body,
+    createdAt: new Date().toLocaleTimeString(),
+  };
+
+  setMessages((current) => [...current, newMessage]);
+  form.reset();
+}
 
   function handleInvite(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
